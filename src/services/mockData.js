@@ -174,6 +174,57 @@ export const MOCK_HOLDINGS = [
     week52Low: 950.00,
     addedDate: '2024-09-15',
   },
+  {
+    id: 'h11',
+    symbol: 'USD/INR',
+    name: 'US Dollar / Indian Rupee',
+    type: 'forex',
+    exchange: 'Forex',
+    sector: 'Currency',
+    quantity: 5000,
+    avgPrice: 83.50,
+    currentPrice: 85.50,
+    previousClose: 85.30,
+    dayHigh: 85.80,
+    dayLow: 85.10,
+    week52High: 87.00,
+    week52Low: 82.00,
+    addedDate: '2024-07-20',
+  },
+  {
+    id: 'h12',
+    symbol: 'EUR/INR',
+    name: 'Euro / Indian Rupee',
+    type: 'forex',
+    exchange: 'Forex',
+    sector: 'Currency',
+    quantity: 3000,
+    avgPrice: 89.20,
+    currentPrice: 93.10,
+    previousClose: 92.85,
+    dayHigh: 93.40,
+    dayLow: 92.60,
+    week52High: 95.00,
+    week52Low: 87.00,
+    addedDate: '2024-10-05',
+  },
+  {
+    id: 'h13',
+    symbol: 'GBP/INR',
+    name: 'British Pound / Indian Rupee',
+    type: 'forex',
+    exchange: 'Forex',
+    sector: 'Currency',
+    quantity: 2000,
+    avgPrice: 105.80,
+    currentPrice: 108.50,
+    previousClose: 108.20,
+    dayHigh: 109.00,
+    dayLow: 107.80,
+    week52High: 112.00,
+    week52Low: 102.00,
+    addedDate: '2025-01-15',
+  },
 ];
 
 export const MOCK_GOALS = [
@@ -288,6 +339,7 @@ export const ASSET_TYPE_COLORS = {
   crypto: '#8b5cf6',
   mutualfund: '#10b981',
   etf: '#f59e0b',
+  forex: '#ec4899',
 };
 
 export const ASSET_TYPE_LABELS = {
@@ -295,6 +347,7 @@ export const ASSET_TYPE_LABELS = {
   crypto: 'Crypto',
   mutualfund: 'Mutual Funds',
   etf: 'ETFs',
+  forex: 'Forex',
 };
 
 export const SECTOR_COLORS = {
@@ -304,6 +357,7 @@ export const SECTOR_COLORS = {
   'Cryptocurrency': '#8b5cf6',
   'Diversified': '#06b6d4',
   'Index': '#ec4899',
+  'Currency': '#f472b6',
   'Other': '#64748b',
 };
 
@@ -336,4 +390,10 @@ export const STOCK_SEARCH_DATA = [
   { symbol: 'MIRAE-MF', name: 'Mirae Asset Large Cap Fund', type: 'mutualfund', sector: 'Large Cap', exchange: 'MF' },
   { symbol: 'NIFTY-ETF', name: 'Nippon India Nifty 50 ETF', type: 'etf', sector: 'Index', exchange: 'NSE' },
   { symbol: 'GOLDBEES', name: 'Nippon India Gold ETF', type: 'etf', sector: 'Commodity', exchange: 'NSE' },
+  { symbol: 'USD/INR', name: 'US Dollar / Indian Rupee', type: 'forex', sector: 'Currency', exchange: 'Forex' },
+  { symbol: 'EUR/INR', name: 'Euro / Indian Rupee', type: 'forex', sector: 'Currency', exchange: 'Forex' },
+  { symbol: 'GBP/INR', name: 'British Pound / Indian Rupee', type: 'forex', sector: 'Currency', exchange: 'Forex' },
+  { symbol: 'JPY/INR', name: 'Japanese Yen / Indian Rupee', type: 'forex', sector: 'Currency', exchange: 'Forex' },
+  { symbol: 'EUR/USD', name: 'Euro / US Dollar', type: 'forex', sector: 'Currency', exchange: 'Forex' },
+  { symbol: 'GBP/USD', name: 'British Pound / US Dollar', type: 'forex', sector: 'Currency', exchange: 'Forex' },
 ];

@@ -7,11 +7,20 @@ import { generateId } from '../utils/formatters';
 const PortfolioContext = createContext(null);
 
 const STORAGE_KEY = 'nexus-ai-portfolio';
+const STORAGE_VERSION = 2; // Bump to force fresh data load (v2 = added forex)
 
 function loadFromStorage() {
   try {
     const data = localStorage.getItem(STORAGE_KEY);
-    if (data) return JSON.parse(data);
+    if (data) {
+      const parsed = JSON.parse(data);
+      // If version mismatch, clear old data to load fresh mock data
+      if (parsed._version !== STORAGE_VERSION) {
+        localStorage.removeItem(STORAGE_KEY);
+        return null;
+      }
+      return parsed;
+    }
   } catch (e) {
     console.warn('Failed to load portfolio data:', e);
   }
@@ -21,6 +30,7 @@ function loadFromStorage() {
 function saveToStorage(state) {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify({
+      _version: STORAGE_VERSION,
       holdings: state.holdings,
       goals: state.goals,
       alerts: state.alerts,
@@ -182,6 +192,8 @@ export function PortfolioProvider({ children }) {
           dataSource: result.dataSource,
           lastUpdated: result.timestamp,
           updateCount: prev.updateCount + 1,
+          liveCount: result.liveCount || 0,
+          totalCount: result.totalCount || 0,
           isMarketOpen: getServiceInfo().isMarketOpen,
         }));
       },

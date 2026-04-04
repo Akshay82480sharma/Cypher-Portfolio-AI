@@ -30,16 +30,21 @@ function LiveStatusBadge() {
     return () => clearInterval(timer);
   }, [marketStatus.lastUpdated]);
 
-  const isLive = marketStatus.dataSource === 'live';
+  const isLive = marketStatus.dataSource === 'live' || marketStatus.dataSource === 'partial';
   const isSimulated = marketStatus.dataSource === 'simulated';
   const isConnecting = marketStatus.dataSource === 'connecting';
+
+  const statusLabel = marketStatus.dataSource === 'live' ? 'LIVE' 
+    : marketStatus.dataSource === 'partial' ? 'LIVE' 
+    : isSimulated ? 'SIMULATED' : 'CONNECTING';
 
   return (
     <div className={`live-status-badge ${isLive ? 'live' : isSimulated ? 'simulated' : 'connecting'}`}>
       <span className="live-status-dot" />
-      <span className="live-status-label">
-        {isLive ? 'LIVE' : isSimulated ? 'SIMULATED' : 'CONNECTING'}
-      </span>
+      <span className="live-status-label">{statusLabel}</span>
+      {marketStatus.liveCount > 0 && (
+        <span className="live-status-time">· {marketStatus.liveCount}/{marketStatus.totalCount}</span>
+      )}
       {marketStatus.lastUpdated && (
         <span className="live-status-time">· {timeAgo}</span>
       )}
