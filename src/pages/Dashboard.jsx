@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { usePortfolio } from '../context/PortfolioContext';
 import NetWorthCard from '../components/dashboard/NetWorthCard';
 import PnLCard from '../components/dashboard/PnLCard';
@@ -5,8 +6,49 @@ import AllocationChart from '../components/dashboard/AllocationChart';
 import PerformanceChart from '../components/dashboard/PerformanceChart';
 import TopMovers from '../components/dashboard/TopMovers';
 import { calculateHealthScore } from '../services/aiEngine';
-import { Briefcase, Brain, Target, Bell, RefreshCw, FlaskConical } from 'lucide-react';
+import { Briefcase, Brain, Target, Bell, RefreshCw, FlaskConical, Wifi, WifiOff, Radio } from 'lucide-react';
 import './Dashboard.css';
+
+function LiveStatusBadge() {
+  const { marketStatus } = usePortfolio();
+  const [timeAgo, setTimeAgo] = useState('');
+
+  useEffect(() => {
+    const update = () => {
+      if (!marketStatus.lastUpdated) {
+        setTimeAgo('connecting...');
+        return;
+      }
+      const seconds = Math.floor((Date.now() - marketStatus.lastUpdated) / 1000);
+      if (seconds < 5) setTimeAgo('just now');
+      else if (seconds < 60) setTimeAgo(`${seconds}s ago`);
+      else setTimeAgo(`${Math.floor(seconds / 60)}m ago`);
+    };
+
+    update();
+    const timer = setInterval(update, 1000);
+    return () => clearInterval(timer);
+  }, [marketStatus.lastUpdated]);
+
+  const isLive = marketStatus.dataSource === 'live';
+  const isSimulated = marketStatus.dataSource === 'simulated';
+  const isConnecting = marketStatus.dataSource === 'connecting';
+
+  return (
+    <div className={`live-status-badge ${isLive ? 'live' : isSimulated ? 'simulated' : 'connecting'}`}>
+      <span className="live-status-dot" />
+      <span className="live-status-label">
+        {isLive ? 'LIVE' : isSimulated ? 'SIMULATED' : 'CONNECTING'}
+      </span>
+      {marketStatus.lastUpdated && (
+        <span className="live-status-time">· {timeAgo}</span>
+      )}
+      {marketStatus.isMarketOpen && (
+        <span className="live-status-market">· NSE Open</span>
+      )}
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const { state, dispatch, computed } = usePortfolio();
@@ -24,8 +66,13 @@ export default function Dashboard() {
   return (
     <div className="page-container dashboard-page">
       <div className="page-header">
-        <h1>Dashboard</h1>
-        <p>Your portfolio at a glance</p>
+        <div className="page-header-row">
+          <div>
+            <h1>Dashboard</h1>
+            <p>Your portfolio at a glance</p>
+          </div>
+          <LiveStatusBadge />
+        </div>
       </div>
 
       {/* Top Row: Net Worth + P&L + Health Score */}

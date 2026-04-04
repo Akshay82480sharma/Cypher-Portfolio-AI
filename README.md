@@ -84,3 +84,25 @@ Track, analyze, and grow your investments smarter. Not just another portfolio tr
 - Goal-based planning
 - What-If simulator
 - Rebalancing engine
+
+## 🚀 Getting Started
+
+### Prerequisites
+- Python 3.11+
+- Node.js / React Native environment
+- PostgreSQL & Redis
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/yourusername/ai-portfolio-manager.git
+
+# Backend setup
+cd backend
+pip install -r requirements.txt
+cp .env.example .env
+
+# Frontend setup
+cd ../frontend
+npm install

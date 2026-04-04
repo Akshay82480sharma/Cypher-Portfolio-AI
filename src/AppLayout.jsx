@@ -1,5 +1,6 @@
 import { usePortfolio } from './context/PortfolioContext';
 import Sidebar from './components/ui/Sidebar';
+import AIChatbot from './components/ui/AIChatbot';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
 import AIAdvisor from './pages/AIAdvisor';
@@ -28,6 +29,7 @@ export default function AppLayout() {
       <main className="app-content">
         <PageComponent />
       </main>
+      <AIChatbot />
     </div>
   );
 }

@@ -1,5 +1,6 @@
-import { createContext, useContext, useReducer, useEffect, useMemo } from 'react';
+import { createContext, useContext, useReducer, useEffect, useMemo, useState, useRef, useCallback } from 'react';
 import { MOCK_HOLDINGS, MOCK_GOALS, MOCK_ALERTS } from '../services/mockData';
+import { startPriceUpdates, getServiceInfo } from '../services/marketDataService';
 import { calculatePortfolioValue, calculateTotalInvested, calculateDailyChange, calculateTypeAllocations, calculateSectorAllocations } from '../utils/calculations';
 import { generateId } from '../utils/formatters';
 
@@ -77,6 +78,18 @@ function portfolioReducer(state, action) {
         ...state,
         holdings: state.holdings.filter(h => h.id !== action.payload),
       };
+
+    case 'UPDATE_PRICES': {
+      const { updates } = action.payload;
+      return {
+        ...state,
+        holdings: state.holdings.map(h => {
+          const update = updates[h.id];
+          if (!update) return h;
+          return { ...h, ...update };
+        }),
+      };
+    }
     
     case 'ADD_GOAL': {
       const newGoal = {
@@ -139,11 +152,56 @@ export function PortfolioProvider({ children }) {
   const saved = loadFromStorage();
   const [state, dispatch] = useReducer(portfolioReducer, saved ? { ...initialState, ...saved } : initialState);
   
+  // Market data status
+  const [marketStatus, setMarketStatus] = useState({
+    dataSource: 'connecting',
+    lastUpdated: null,
+    isMarketOpen: false,
+    updateCount: 0,
+  });
+
+  const holdingsRef = useRef(state.holdings);
+  holdingsRef.current = state.holdings;
+
   // Auto-save to localStorage
   useEffect(() => {
     saveToStorage(state);
   }, [state.holdings, state.goals, state.alerts, state.settings]);
   
+  // Start real-time price updates
+  useEffect(() => {
+    const serviceInfo = getServiceInfo();
+    setMarketStatus(prev => ({ ...prev, isMarketOpen: serviceInfo.isMarketOpen }));
+
+    const cleanup = startPriceUpdates(
+      () => holdingsRef.current,
+      (result) => {
+        dispatch({ type: 'UPDATE_PRICES', payload: result });
+        setMarketStatus(prev => ({
+          ...prev,
+          dataSource: result.dataSource,
+          lastUpdated: result.timestamp,
+          updateCount: prev.updateCount + 1,
+          isMarketOpen: getServiceInfo().isMarketOpen,
+        }));
+      },
+      30000
+    );
+
+    // Refresh market open status every minute
+    const marketCheckInterval = setInterval(() => {
+      setMarketStatus(prev => ({
+        ...prev,
+        isMarketOpen: getServiceInfo().isMarketOpen,
+      }));
+    }, 60000);
+
+    return () => {
+      cleanup();
+      clearInterval(marketCheckInterval);
+    };
+  }, []);
+
   // Computed values
   const computed = useMemo(() => {
     const totalValue = calculatePortfolioValue(state.holdings);
@@ -168,7 +226,7 @@ export function PortfolioProvider({ children }) {
   }, [state.holdings, state.alerts]);
   
   return (
-    <PortfolioContext.Provider value={{ state, dispatch, computed }}>
+    <PortfolioContext.Provider value={{ state, dispatch, computed, marketStatus }}>
       {children}
     </PortfolioContext.Provider>
   );
