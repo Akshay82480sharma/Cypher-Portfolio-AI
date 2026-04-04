@@ -1,0 +1,107 @@
+/* ── Alerts Page Styles ── */
+
+.alerts-page .page-header .flex {
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.alerts-section-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.alerts-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+/* ── Alert Card ── */
+.alert-card {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition-fast);
+  align-items: flex-start;
+}
+
+.alert-card:hover {
+  background: var(--bg-card-hover);
+}
+
+.alert-card.alert-read {
+  opacity: 0.6;
+}
+
+.alert-card.alert-read:hover {
+  opacity: 0.8;
+}
+
+.alert-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.alert-critical .alert-icon {
+  background: var(--loss-bg);
+  color: var(--loss);
+}
+
+.alert-warning .alert-icon {
+  background: var(--warning-bg);
+  color: var(--warning);
+}
+
+.alert-info .alert-icon {
+  background: var(--info-bg);
+  color: var(--info);
+}
+
+.alert-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.alert-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.alert-message {
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: var(--space-2);
+}
+
+.alert-footer {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.alert-time {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.alert-actions {
+  display: flex;
+  gap: var(--space-1);
+  flex-shrink: 0;
+}

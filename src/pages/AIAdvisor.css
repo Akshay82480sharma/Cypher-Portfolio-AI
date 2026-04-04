@@ -1,0 +1,287 @@
+/* ── AI Advisor Page Styles ── */
+
+.advisor-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  margin-bottom: var(--space-6);
+}
+
+@media (max-width: 1024px) {
+  .advisor-grid { grid-template-columns: 1fr; }
+}
+
+/* ── Health Card ── */
+.health-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+.health-icon {
+  color: var(--accent-purple);
+}
+
+.health-gauge-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: var(--space-6);
+}
+
+.health-gauge-svg {
+  width: 220px;
+  max-width: 100%;
+}
+
+.gauge-progress {
+  transition: stroke-dasharray 1.5s ease-out;
+}
+
+.gauge-needle {
+  transition: all 1.5s ease-out;
+  transform-origin: 100px 100px;
+}
+
+.health-gauge-value {
+  margin-top: -30px;
+  display: flex;
+  align-items: baseline;
+}
+
+.health-gauge-number {
+  font-size: var(--text-5xl);
+  font-weight: 900;
+  font-family: var(--font-mono);
+  line-height: 1;
+}
+
+.health-gauge-max {
+  font-size: var(--text-xl);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.health-gauge-label {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-top: var(--space-1);
+}
+
+/* ── Health Breakdown ── */
+.health-breakdown {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--border-secondary);
+}
+
+.health-breakdown-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.health-breakdown-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.health-breakdown-label {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.health-breakdown-score {
+  font-size: var(--text-xs);
+  font-family: var(--font-mono);
+  color: var(--text-tertiary);
+  font-weight: 600;
+}
+
+.health-breakdown-bar {
+  height: 6px;
+  background: rgba(148, 163, 184, 0.1);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.health-breakdown-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 1s ease-out;
+}
+
+/* ── Risks ── */
+.risks-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  color: var(--text-primary);
+}
+
+.risk-count {
+  margin-left: auto;
+}
+
+.risks-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.risk-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.risk-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: rgba(148, 163, 184, 0.03);
+  border: 1px solid var(--border-secondary);
+  transition: all var(--transition-fast);
+}
+
+.risk-item:hover {
+  background: rgba(148, 163, 184, 0.06);
+}
+
+.risk-severity-bar {
+  width: 3px;
+  min-height: 40px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+  align-self: stretch;
+}
+
+.risk-critical .risk-severity-bar { background: var(--loss); }
+.risk-warning .risk-severity-bar { background: var(--warning); }
+.risk-info .risk-severity-bar { background: var(--info); }
+
+.risk-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.risk-title-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-1);
+}
+
+.risk-critical .risk-title-row { color: var(--loss); }
+.risk-warning .risk-title-row { color: var(--warning); }
+.risk-info .risk-title-row { color: var(--info); }
+
+.risk-title {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.risk-description {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  line-height: 1.5;
+}
+
+/* ── Recommendations ── */
+.recommendations-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-5);
+  color: var(--text-primary);
+}
+
+.recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+
+.recommendation-item {
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: rgba(148, 163, 184, 0.03);
+  border: 1px solid var(--border-secondary);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  transition: all var(--transition-fast);
+}
+
+.recommendation-item:hover {
+  background: rgba(148, 163, 184, 0.06);
+  border-color: var(--border-accent);
+}
+
+.recommendation-top {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.recommendation-asset {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.recommendation-symbol {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: var(--text-primary);
+}
+
+.recommendation-name {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+}
+
+.recommendation-reason {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.recommendation-impact {
+  font-size: var(--text-xs);
+  color: var(--text-tertiary);
+  padding-top: var(--space-2);
+  border-top: 1px solid var(--border-secondary);
+}
+
+.recommendation-impact-label {
+  font-weight: 600;
+  color: var(--accent-blue);
+  margin-right: var(--space-1);
+}
+
+.advisor-disclaimer {
+  margin-top: var(--space-6);
+  padding: var(--space-4);
+  border-radius: var(--radius-lg);
+  background: var(--warning-bg);
+  color: var(--warning);
+  font-size: var(--text-xs);
+  text-align: center;
+  font-weight: 500;
+}
