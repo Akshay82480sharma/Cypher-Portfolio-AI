@@ -96,7 +96,7 @@ Track, analyze, and grow your investments smarter. Not just another portfolio tr
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/Cypher-Portfolio-AI.git
+git clone (https://github.com/Akshay82480sharma/Cypher-Portfolio-AI.git)
 
 # Backend setup
 cd backend
